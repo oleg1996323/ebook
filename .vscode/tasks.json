@@ -1,0 +1,41 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Create build dir",
+            "type": "shell",
+            "command": "if [[ ! -d \"${workspaceFolder}/bin\" ]]; then mkdir bin && echo \"Dir created\";fi"
+        },
+        {
+            "label": "Build C++ project",
+            "type": "shell",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "options": {
+                "cwd": "${workspaceFolder}",
+            },
+            "command": "g++",
+            "args": [
+                "-std=c++17",
+                "-g",
+                "-Wall",
+                "-Werror",
+                "*.cpp",
+                "-o",
+                "${workspaceFolder}/bin/main",
+                //"-ltbb",
+                "-lpthread"
+            ]
+        },
+        {
+            "label": "Build",
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "Create build dir",
+                "Build C++ project"
+            ]
+        }
+    ]
+}
